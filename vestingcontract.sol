@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -7,30 +6,27 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract VestingContract is Ownable {
 using SafeMath for uint256;
-// SafeMath helps in initializing mathematical terms in code
+
 IERC20 public token;
 uint256 public totalAllocatedTokens;
 uint256 public start;
 
 enum Role { User, Partner, Team }
-//Vesting period: the time during which tokens will be distritubed to the beneficiary accounts.
+
 struct VestingSchedule {
 uint256 totalAmount;
-//totalAmount: The total number of tokens allocated to the beneficiary.
+
 uint256 cliff;
-//cliff: The minimum time that must pass before any tokens can be released.
+
 uint256 duration;
-//duration: The total period over which the tokens will vest.
+
 uint256 released;
-//released: The amount of tokens that have been already released.
+
 }
 
 mapping(address => VestingSchedule) public beneficiaries;
-//Mapping address of the wallet to the Struct VestingSchedule and stores it in beneficiaries (array)
-//beneficiaries: refers to the array of accounts registered for vesting a Particular Token
+
 mapping(address => Role) public roles;
-//Mapping address of the wallet to the Role, which can be User, Partner, Team and stores it in roles
-(array)
 
 event VestingStarted(uint256 start);
 event BeneficiaryAdded(address indexed beneficiary, Role role, uint256 amount);
